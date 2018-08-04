@@ -1,0 +1,36 @@
+apply plugin: 'java'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+	compile "javax.json.bind:javax.json.bind-api:$jsonbVersion"
+	compile "org.eclipse:yasson:$yassonVersion"
+	compile "org.glassfish:javax.json:$jsonVersion"
+
+	testCompile "junit:junit:$junitVersion"
+	
+	// 仅用于查看 Gradle 源码
+	// testCompile gradleApi()
+}
+
+// 编译 Java 文件时采用 UTF-8 编码
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+// 控制测试日志
+tasks.withType(Test) {
+	testLogging {
+		// 记录标准输出和错误
+	    showStandardStreams = true
+	    // 显示全部的异常跟踪栈信息
+	    exceptionFormat 'full'
+	}
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.5.1'
+}
